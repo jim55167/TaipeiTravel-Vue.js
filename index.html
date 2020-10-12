@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台北旅遊資訊網</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.css">
+    <link rel="stylesheet" href="css/all.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- 頭部 -->
+        <template>
+            <div class="goTop"></div>
+        </template>        
+        <div class="header">
+            <p class="title">台北旅遊資訊</p>
+            <div id="box">
+                <select class="chooseArea" v-model='filter'>
+                    <option disabled value=""> - - 請選擇區域 - - </option>
+                <template v-for="county in countys" >
+                    <option :value="county" v-if=" county!=='' " >{{ county }}</option>
+                </template>
+                </select>
+            </div>
+            <div class="hot-region">
+                <h1>熱門行政區</h1>
+                <button class="btn1" @click="filter = '北投區'"><a>北投區</a></button>
+                <button class="btn2" @click="filter = '中山區'"><a>中山區</a></button>
+                <button class="btn3" @click="filter = '信義區'"><a>信義區</a></button>
+                <button class="btn4" @click="filter = '內湖區'"><a>內湖區</a></button>
+            </div>
+
+            <div class="line"></div>
+            <div class="img"><img src="https://img.onl/x2X2bk"></div>
+        </div>
+
+        <div class="nav" :click-handler="pageCallback">
+            <h2 class="areaName"></h2>
+            <ul class="list">
+                <li v-for="item in filterDatas">
+                    <div class="bigimg" :style="{ backgroundImage: 'url(' + 'http://' + item.file[0] + ')' }"></div>
+                    <h3>{{item.stitle}}</h3>
+                    <h4>{{item.address.substr(5, 3)}}</h4>
+                    <div class="sights">
+                        <div class="icon1">
+                            <img src="https://img.onl/k45lvs" >
+                            <span>{{item.CAT2}}</span>
+                        </div>
+                        <div class="icon2">
+                            <img src="https://img.onl/Cm3iKg" >
+                            <span>{{item.address}}</span>
+                        </div>
+                        <div class="icon3">
+                            <img src="https://img.onl/Ok9p1F">
+                            <template v-if="item.MRT!==null">
+                                <span>轉乘至：{{item.MRT}}站</span>
+                            </template>
+                        </div>
+                        <a href="" class="detail">景點介紹</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="paginationBox">
+                <paginate 
+                :page-count="pageCount"
+                :page-range="3"
+                :margin-pages="3"
+                :prev-text="'Prev'"
+                :next-text="'Next'"
+                :container-class="'pagination'"
+                :page-class="'page-item'" 
+                :click-handler="pageCallback">
+              </paginate>
+            </div>           
+        </div>
+
+        <div class="footer">
+            <div class="from-data">
+                <h2>臺北旅遊網</h2>
+                <a href="https://admin.twtainan.net/">資料來源 : 臺北市政府</a>
+            </div>
+        </div>
+
+        <div class="screen">
+            <div class="view-box">
+                <div class="box">
+                    <div class="picture">
+                        <img src="https://unsplash.it/500/200" alt="" class="view-picture">
+                    </div>
+                    <h3 class="view-title">標題</h3>
+                    <p>
+                        <b>地區：</b>
+                        <span class="view-area"></span>
+                    </p>
+                    <p>
+                        <b>類型：</b>
+                        <span class="view-type"></span>
+                    </p>
+                    <p>
+                        <b>電話：</b>
+                        <span class="view-tel"></span>
+                    </p>
+                    <p>
+                        <b>地址：</b>
+                        <span class="view-address"></span>
+                    </p>
+                    <p>
+                        <b>捷運站：</b>
+                        <span class="view-mrt"></span>
+                    </p>
+                    <p>
+                        <b>開放時間：</b>
+                        <span class="view-time">
+                        </span>
+                    </p>
+                    <p>
+                        <b>景點資訊：</b>
+                        <p class="view-detail">
+                        </p>
+                    </p>
+                </div>
+                <div class="cancel">X</div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- use the latest release -->
+    <script src="https://unpkg.com/vuejs-paginate@latest"></script>
+    <!-- or use the specify version -->
+    <script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
+    <script src="js/back-top.js"></script>   
+    <script src="js/main.js"></script>
+    
+</body>
+
+</html>
