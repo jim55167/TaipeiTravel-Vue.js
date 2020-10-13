@@ -6,9 +6,11 @@ var app = new Vue({
     data:[],
     location:[],
     filter:'',
+    lightBox:false,
     currentPage: 1,
     page_size: 16,
     pageCount: 1,
+    areaDetail: [],
   },
   created: function(){
     this.addData();
@@ -30,6 +32,17 @@ var app = new Vue({
         vm.data = attractions
         console.log(vm.data);  
       })
+    },
+    focusLocation: function(item){
+      const vm = this;
+        vm.lightBox = !vm.lightBox; 
+        vm.areaDetail.push(item)
+        console.log(vm.areaDetail);
+    },
+    cancelLocation: function(){
+      const vm = this;
+      vm.areaDetail.splice(0, 1)
+      // vm.lightBox = !vm.lightBox;
     },    
     pageCallback: function(pageNum) {
       const vm = this;

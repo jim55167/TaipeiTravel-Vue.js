@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>台北旅遊資訊網</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
-    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+        integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.css">
     <link rel="stylesheet" href="css/all.css">
 </head>
@@ -14,17 +14,15 @@
 <body>
     <div id="app">
         <!-- 頭部 -->
-        <template>
-            <div class="goTop"></div>
-        </template>        
+        <div class="goTop"></div>
         <div class="header">
             <p class="title">台北旅遊資訊</p>
             <div id="box">
                 <select class="chooseArea" v-model='filter'>
                     <option disabled value=""> - - 請選擇區域 - - </option>
-                <template v-for="county in countys" >
-                    <option :value="county" v-if=" county!=='' " >{{ county }}</option>
-                </template>
+                    <template v-for="county in countys">
+                        <option :value="county" v-if=" county!=='' ">{{ county }}</option>
+                    </template>
                 </select>
             </div>
             <div class="hot-region">
@@ -48,11 +46,11 @@
                     <h4>{{item.address.substr(5, 3)}}</h4>
                     <div class="sights">
                         <div class="icon1">
-                            <img src="https://img.onl/k45lvs" >
+                            <img src="https://img.onl/k45lvs">
                             <span>{{item.CAT2}}</span>
                         </div>
                         <div class="icon2">
-                            <img src="https://img.onl/Cm3iKg" >
+                            <img src="https://img.onl/Cm3iKg">
                             <span>{{item.address}}</span>
                         </div>
                         <div class="icon3">
@@ -61,22 +59,16 @@
                                 <span>轉乘至：{{item.MRT}}站</span>
                             </template>
                         </div>
-                        <a href="" class="detail">景點介紹</a>
+                        <a href="" class="detail" @click.prevent="focusLocation(item)">景點介紹</a>
                     </div>
                 </li>
             </ul>
             <div class="paginationBox">
-                <paginate 
-                :page-count="pageCount"
-                :page-range="3"
-                :margin-pages="3"
-                :prev-text="'Prev'"
-                :next-text="'Next'"
-                :container-class="'pagination'"
-                :page-class="'page-item'" 
-                :click-handler="pageCallback">
-              </paginate>
-            </div>           
+                <paginate :page-count="pageCount" :page-range="3" :margin-pages="3" :prev-text="'Prev'"
+                    :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'"
+                    :click-handler="pageCallback">
+                </paginate>
+            </div>
         </div>
 
         <div class="footer">
@@ -85,48 +77,48 @@
                 <a href="https://admin.twtainan.net/">資料來源 : 臺北市政府</a>
             </div>
         </div>
-
-        <div class="screen">
+        
+        <div v-if="areaDetail.length > 0" class="screen">
             <div class="view-box">
                 <div class="box">
                     <div class="picture">
-                        <img src="https://unsplash.it/500/200" alt="" class="view-picture">
+                        <img src="https://unsplash.it/500/200">
                     </div>
-                    <h3 class="view-title">標題</h3>
+                    <h3 class="view-title">{{ areaDetail[0].stitle }}</h3>
                     <p>
                         <b>地區：</b>
-                        <span class="view-area"></span>
+                        <span class="view-area">{{ areaDetail[0].address.substr(5, 3) }}</span>
                     </p>
                     <p>
                         <b>類型：</b>
-                        <span class="view-type"></span>
-                    </p>
-                    <p>
-                        <b>電話：</b>
-                        <span class="view-tel"></span>
+                        <span class="view-type">{{ areaDetail[0].CAT2 }}</span>
                     </p>
                     <p>
                         <b>地址：</b>
-                        <span class="view-address"></span>
+                        <span class="view-address">{{ areaDetail[0].address }}</span>
                     </p>
                     <p>
                         <b>捷運站：</b>
-                        <span class="view-mrt"></span>
+                        <span class="view-mrt">{{ areaDetail[0].MRT }}</span>
                     </p>
                     <p>
                         <b>開放時間：</b>
-                        <span class="view-time">
-                        </span>
+                        <span class="view-time">{{ areaDetail[0].MEMO_TIME }}</span>
+                    </p>
+                    <p>
+                        <b>轉乘方式：</b></br>
+                        <span class="view-info">{{ areaDetail[0].info }}</span>
                     </p>
                     <p>
                         <b>景點資訊：</b>
-                        <p class="view-detail">
-                        </p>
+                        <p class="view-detail">{{ areaDetail[0].xbody }}</p>
                     </p>
+                   
                 </div>
-                <div class="cancel">X</div>
+                <div class="cancel" @click="cancelLocation">X</div>              
             </div>
         </div>
+        
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -134,9 +126,9 @@
     <script src="https://unpkg.com/vuejs-paginate@latest"></script>
     <!-- or use the specify version -->
     <script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
-    <script src="js/back-top.js"></script>   
+    <script src="js/back-top.js"></script>
     <script src="js/main.js"></script>
-    
+
 </body>
 
 </html>
