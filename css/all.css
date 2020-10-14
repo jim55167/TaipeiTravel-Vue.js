@@ -1,8 +1,3 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -305,9 +300,6 @@ img{
   width: 100%;
   height: 100%;
 }
-.show{
-  display: block;
-}
 .screen .view-box {
   background-color: white;
   position: absolute;
@@ -336,7 +328,10 @@ img{
 
 .screen .view-box .picture img {
   width: 100%;
-  height: 100%;
+  height: 300px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .screen .view-box p {

@@ -35,14 +35,13 @@ var app = new Vue({
     },
     focusLocation: function(item){
       const vm = this;
-        vm.lightBox = !vm.lightBox; 
-        vm.areaDetail.push(item)
-        console.log(vm.areaDetail);
+      vm.lightBox = !vm.lightBox; 
+      vm.areaDetail.push(item)
+      console.log(vm.areaDetail);
     },
     cancelLocation: function(){
       const vm = this;
       vm.areaDetail.splice(0, 1)
-      // vm.lightBox = !vm.lightBox;
     },    
     pageCallback: function(pageNum) {
       const vm = this;

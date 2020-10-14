@@ -55,9 +55,7 @@
                         </div>
                         <div class="icon3">
                             <img src="https://img.onl/Ok9p1F">
-                            <template v-if="item.MRT!==null">
-                                <span>轉乘至：{{item.MRT}}站</span>
-                            </template>
+                            <span>轉乘至：{{item.MRT || '尚未提供捷運'}}站</span>
                         </div>
                         <a href="" class="detail" @click.prevent="focusLocation(item)">景點介紹</a>
                     </div>
@@ -82,7 +80,7 @@
             <div class="view-box">
                 <div class="box">
                     <div class="picture">
-                        <img src="https://unsplash.it/500/200">
+                        <img :style="{ backgroundImage: 'url(' + 'http://' + areaDetail[0].file[1] + ')' }" /> 
                     </div>
                     <h3 class="view-title">{{ areaDetail[0].stitle }}</h3>
                     <p>
